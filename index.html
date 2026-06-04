@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MacroPilot — Autonomous Macro Intelligence</title>
+<meta name="description" content="Live macro regime detection and autonomous portfolio management. Self-improving system tracking 12 global signals.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#060c18;--surface:#0d1626;--surface2:#121e32;--line:rgba(148,163,184,.1);
+  --ink:#e2eaf6;--muted:#7a8ba8;--dim:#4a5568;
+  --blue:#3b82f6;--green:#22c55e;--red:#ef4444;--amber:#f59e0b;--purple:#a855f7;--cyan:#06b6d4;
+  --regime:#22c55e
+}
+html,body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130,246,.08),transparent 60%),radial-gradient(ellipse 800px 500px at 90% 5%,rgba(168,85,247,.08),transparent 60%);background-attachment:fixed}
+.wrap{max-width:1160px;margin:0 auto;padding:40px 20px 80px}
+
+/* HEADER */
+.site-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;flex-wrap:wrap;gap:12px}
+.logo-row{display:flex;align-items:center;gap:12px}
+.logo-mark{width:42px;height:42px;border-radius:12px;background:linear-gradient(145deg,#0a1525,#0d2040);border:1px solid rgba(59,130,246,.35);display:grid;place-items:center;box-shadow:0 0 20px rgba(59,130,246,.15)}
+.logo-name{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.5px;color:#fff}
+.logo-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-top:2px}
+.header-pills{display:flex;gap:6px;flex-wrap:wrap}
+.h-pill{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:20px;border:1px solid var(--line);color:var(--muted);background:rgba(148,163,184,.05)}
+.h-pill.live{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.07)}
+.live-dot{width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;animation:pulse 2s infinite;vertical-align:middle}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.5)}70%{box-shadow:0 0 0 6px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+
+/* SECTION TITLES */
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--dim);margin:40px 0 16px}
+
+/* REGIME HERO */
+.regime-hero{background:linear-gradient(135deg,var(--surface) 0%,var(--surface2) 100%);border:1px solid var(--line);border-radius:20px;padding:28px 32px;margin-bottom:12px;border-top:3px solid var(--regime);position:relative;overflow:hidden}
+.regime-hero::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse 600px 200px at 50% -20%,#22c55e15,transparent 60%);pointer-events:none}
+.regime-label-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;position:relative}
+.regime-badge{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800;color:#22c55e;letter-spacing:-.5px;line-height:1}
+.regime-conf-wrap{flex:1;min-width:200px}
+.regime-conf-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.regime-conf-bar{height:6px;background:rgba(148,163,184,.1);border-radius:3px;overflow:hidden}
+.regime-conf-fill{height:100%;width:60%;background:#eab308;border-radius:3px;transition:width .8s ease}
+.regime-conf-pct{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:#eab308;margin-top:5px}
+.regime-desc{font-size:14px;color:var(--muted);line-height:1.6;margin-top:14px;position:relative}
+.regime-note{font-size:13px;color:#93c5fd;margin-top:8px;padding:10px 14px;background:rgba(59,130,246,.07);border-radius:8px;border-left:2px solid rgba(59,130,246,.3)}
+.regime-updated{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim);margin-top:14px}
+.regime-adversarial{font-size:11px;color:var(--dim);margin-top:8px;padding:8px 12px;background:rgba(168,85,247,.05);border-radius:6px;border-left:2px solid rgba(168,85,247,.2)}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+.stat-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.stat-label{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.stat-val{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.5px;line-height:1}
+.stat-sub{font-size:11px;color:var(--dim);margin-top:4px}
+
+/* PORTFOLIO SECTION */
+.portfolio-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px 28px;margin-bottom:12px}
+.portfolio-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px}
+.portfolio-title{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:#fff}
+.portfolio-hint{font-size:12px;color:var(--muted);background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:6px;padding:4px 10px}
+.portfolio-sub{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.5}
+.alloc-row{display:grid;grid-template-columns:180px 1fr 80px;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid rgba(148,163,184,.05)}
+.alloc-row:last-child{border-bottom:none}
+.alloc-label{display:flex;align-items:center;gap:8px}
+.alloc-dot{width:8px;height:8px;border-radius:50%;flex:none}
+.alloc-name{font-size:13px;font-weight:500;color:var(--ink)}
+.alloc-bar-wrap{background:rgba(148,163,184,.08);border-radius:4px;height:8px;overflow:hidden}
+.alloc-bar{height:100%;border-radius:4px;transition:width .6s ease}
+.alloc-right{display:flex;align-items:center;gap:6px;justify-content:flex-end}
+.alloc-pct{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:#fff}
+.alloc-diff{font-size:10px;font-weight:600}
+.alloc-up{color:var(--green)}.alloc-down{color:var(--red)}.alloc-neutral{color:var(--dim)}
+.follow-note{margin-top:16px;padding:12px 16px;background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.15);border-radius:10px;font-size:13px;color:#86efac;line-height:1.5}
+
+/* SIGNAL GRID */
+.sig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sig-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.sig-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.sig-name{font-size:12px;font-weight:600;color:var(--muted)}
+.sig-badge{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 8px;border-radius:10px;border:1px solid}
+.sig-value{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+.sig-trend{font-size:12px;opacity:.6}
+.sig-interp{font-size:11px;color:var(--dim);line-height:1.4;margin-bottom:6px}
+.sig-weight{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--dim)}
+
+/* PERFORMANCE CHART */
+.chart-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px 28px;margin-bottom:12px}
+.chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:8px}
+.chart-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:#fff}
+.chart-legend{display:flex;gap:16px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+.legend-dot{width:8px;height:8px;border-radius:50%}
+.chart-wrap{position:relative;height:220px}
+.chart-empty{display:flex;align-items:center;justify-content:center;height:220px;font-size:13px;color:var(--dim);border:1px dashed rgba(148,163,184,.15);border-radius:10px}
+
+/* DECISIONS */
+.decisions-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px 28px;margin-bottom:12px}
+.decision-row{display:grid;grid-template-columns:90px 1fr 60px 160px;gap:12px;padding:10px 0;border-bottom:1px solid rgba(148,163,184,.05);font-size:12px;align-items:start}
+.decision-row:last-child{border-bottom:none}
+.dec-date{font-family:'IBM Plex Mono',monospace;color:var(--dim)}
+.dec-regime{font-weight:600;color:#fff}
+.dec-conf{font-family:'IBM Plex Mono',monospace;color:var(--amber)}
+.dec-rotation{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue)}
+.dec-note{color:var(--muted);font-size:11px;grid-column:1/-1;padding-top:2px}
+
+/* LEARNING */
+.learn-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px 28px;margin-bottom:12px}
+.learn-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.learn-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim)}
+.learn-acc{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:var(--green)}
+.learn-insight{font-size:14px;font-weight:600;color:#fff;margin-bottom:8px;line-height:1.5}
+.learn-summary{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+.adj-list{display:flex;flex-wrap:wrap;gap:6px}
+.adj-chip{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:#93c5fd}
+.shadow-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.shadow-chip{font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);color:#d8b4fe}
+
+/* HISTORY TABLE */
+.hist-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px 28px;margin-bottom:12px;overflow-x:auto}
+.hist-table{width:100%;border-collapse:collapse;font-size:12px}
+.hist-table th{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);text-align:left;padding:0 12px 10px 0;border-bottom:1px solid var(--line)}
+.hist-table td{padding:9px 12px 9px 0;border-bottom:1px solid rgba(148,163,184,.04);color:var(--muted);vertical-align:top}
+.hist-table td:first-child{font-family:'IBM Plex Mono',monospace;color:var(--dim)}
+.hist-table td:nth-child(2){color:#fff;font-weight:500}
+.hist-table td:nth-child(3){font-family:'IBM Plex Mono',monospace;color:var(--amber)}
+.hist-reasoning{font-size:11px;color:var(--dim);max-width:300px}
+
+/* EMPTY STATE */
+.empty-state{font-size:13px;color:var(--dim);padding:20px 0}
+
+/* FOOTER */
+.site-footer{text-align:center;padding-top:40px;font-size:11px;color:var(--dim);line-height:2}
+.site-footer a{color:var(--muted);text-decoration:none}
+.site-footer a:hover{color:var(--blue)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .sig-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .wrap{padding:24px 14px 60px}
+  .regime-badge{font-size:20px}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .sig-grid{grid-template-columns:1fr}
+  .decision-row{grid-template-columns:1fr 1fr}
+  .alloc-row{grid-template-columns:150px 1fr 70px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="site-header">
+  <div class="logo-row">
+    <div class="logo-mark">
+      <svg width="24" height="24" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="17" stroke="#3b82f6" stroke-width="1.2" opacity="0.4"/>
+        <circle cx="20" cy="20" r="10" stroke="#3b82f6" stroke-width="1.5" opacity="0.7"/>
+        <circle cx="20" cy="20" r="3" fill="#3b82f6"/>
+        <line x1="20" y1="3" x2="20" y2="9" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="20" y1="31" x2="20" y2="37" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="3" y1="20" x2="9" y2="20" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="31" y1="20" x2="37" y2="20" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div>
+      <div class="logo-name">MacroPilot</div>
+      <div class="logo-tag">L7 · Macro Intelligence</div>
+    </div>
+  </div>
+  <div class="header-pills">
+    <span class="h-pill live"><span class="live-dot"></span>Live</span>
+    <span class="h-pill">12 Signals</span>
+    <span class="h-pill">Self-Improving</span>
+    <span class="h-pill">Updated 04 Jun 2026, 02:55 PM SGT</span>
+  </div>
+</header>
+
+<!-- REGIME HERO -->
+<div class="section-title">Current Macro Regime</div>
+<div class="regime-hero">
+  <div class="regime-label-row">
+    <div class="regime-badge">Risk-On Growth</div>
+    <div class="regime-conf-wrap">
+      <div class="regime-conf-label">System Confidence</div>
+      <div class="regime-conf-bar"><div class="regime-conf-fill"></div></div>
+      <div class="regime-conf-pct">60% confident</div>
+    </div>
+  </div>
+  <div class="regime-desc">Markets are in growth mode. Risk appetite is healthy — equities are favoured over bonds. Good time to hold equity positions.</div>
+  <div class="regime-note">📋 Maintain cyclical tilt but de-emphasise maximum-beta names; favour quality cyclicals with pricing power over pure momentum plays, and keep position sizes below full allocation until cross-asset momentum turns positive and oil confirms demand.</div>
+  <div class="regime-adversarial">⚔️ Adversarial review: The signal stack remains net growth-positive: equities are leading bonds, credit is tight, volatility is compressed, and cyclicals are rotating hard. However, the adversarial revie</div>
+  <div class="regime-updated">Signals refreshed: 04 Jun 2026, 02:54 PM SGT · Portfolio updated: 04 Jun 2026, 02:55 PM SGT</div>
+</div>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-label">Total Regime Calls</div>
+    <div class="stat-val">1</div>
+    <div class="stat-sub">Since launch</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Accuracy</div>
+    <div class="stat-val">Building track record...</div>
+    <div class="stat-sub">0 calls graded</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Learning Cycles</div>
+    <div class="stat-val">0</div>
+    <div class="stat-sub">Weekly refinements</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Signals Active</div>
+    <div class="stat-val">12</div>
+    <div class="stat-sub">1 in shadow testing</div>
+  </div>
+</div>
+
+<!-- PORTFOLIO -->
+<div class="section-title">Portfolio Allocation</div>
+<div class="portfolio-card">
+  <div class="portfolio-header">
+    <div class="portfolio-title">Current Target Allocations</div>
+    <div class="portfolio-hint">📌 Following this? Use these weights</div>
+  </div>
+  <div class="portfolio-sub">Based on the <strong style="color:#22c55e">Risk-On Growth</strong> regime at <strong>60% confidence</strong>. The system rotates gradually — max 20% shift per cycle — to avoid overreacting to short-term noise.</div>
+  
+    <div class="alloc-row">
+      <div class="alloc-label">
+        <span class="alloc-dot" style="background:#3b82f6"></span>
+        <span class="alloc-name">US Market (SPY)</span>
+      </div>
+      <div class="alloc-bar-wrap">
+        <div class="alloc-bar" style="width:35%;background:#3b82f6"></div>
+      </div>
+      <div class="alloc-right">
+        <span class="alloc-pct">35%</span>
+        
+      </div>
+    </div>
+
+    <div class="alloc-row">
+      <div class="alloc-label">
+        <span class="alloc-dot" style="background:#8b5cf6"></span>
+        <span class="alloc-name">Tech Growth (QQQ)</span>
+      </div>
+      <div class="alloc-bar-wrap">
+        <div class="alloc-bar" style="width:25%;background:#8b5cf6"></div>
+      </div>
+      <div class="alloc-right">
+        <span class="alloc-pct">25%</span>
+        
+      </div>
+    </div>
+
+    <div class="alloc-row">
+      <div class="alloc-label">
+        <span class="alloc-dot" style="background:#f97316"></span>
+        <span class="alloc-name">Bitcoin (IBIT)</span>
+      </div>
+      <div class="alloc-bar-wrap">
+        <div class="alloc-bar" style="width:15%;background:#f97316"></div>
+      </div>
+      <div class="alloc-right">
+        <span class="alloc-pct">15%</span>
+        
+      </div>
+    </div>
+
+    <div class="alloc-row">
+      <div class="alloc-label">
+        <span class="alloc-dot" style="background:#22c55e"></span>
+        <span class="alloc-name">Energy (XLE)</span>
+      </div>
+      <div class="alloc-bar-wrap">
+        <div class="alloc-bar" style="width:10%;background:#22c55e"></div>
+      </div>
+      <div class="alloc-right">
+        <span class="alloc-pct">10%</span>
+        
+      </div>
+    </div>
+
+    <div class="alloc-row">
+      <div class="alloc-label">
+        <span class="alloc-dot" style="background:#06b6d4"></span>
+        <span class="alloc-name">Long Bonds (TLT)</span>
+      </div>
+      <div class="alloc-bar-wrap">
+        <div class="alloc-bar" style="width:5%;background:#06b6d4"></div>
+      </div>
+      <div class="alloc-right">
+        <span class="alloc-pct">5%</span>
+        
+      </div>
+    </div>
+
+    <div class="alloc-row">
+      <div class="alloc-label">
+        <span class="alloc-dot" style="background:#f59e0b"></span>
+        <span class="alloc-name">Gold (GLD)</span>
+      </div>
+      <div class="alloc-bar-wrap">
+        <div class="alloc-bar" style="width:5%;background:#f59e0b"></div>
+      </div>
+      <div class="alloc-right">
+        <span class="alloc-pct">5%</span>
+        
+      </div>
+    </div>
+
+    <div class="alloc-row">
+      <div class="alloc-label">
+        <span class="alloc-dot" style="background:#6b7280"></span>
+        <span class="alloc-name">Cash</span>
+      </div>
+      <div class="alloc-bar-wrap">
+        <div class="alloc-bar" style="width:5%;background:#6b7280"></div>
+      </div>
+      <div class="alloc-right">
+        <span class="alloc-pct">5%</span>
+        
+      </div>
+    </div>
+  <div class="follow-note">
+    💡 <strong>How to follow this portfolio:</strong> Allocate your capital using the percentages above across these ETFs.
+    The system updates allocations daily and notifies you of any rotation through this dashboard.
+    All positions are long only — no shorting, no leverage.
+  </div>
+</div>
+
+<!-- PERFORMANCE CHART -->
+<div class="section-title">Performance vs Benchmark</div>
+<div class="chart-card">
+  <div class="chart-header">
+    <div class="chart-title">Portfolio Equity Curve</div>
+    <div class="chart-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>MacroPilot</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#6b7280"></div>SPY (Buy & Hold)</div>
+    </div>
+  </div>
+  <div class="chart-wrap">
+    <canvas id="perfChart"></canvas>
+  </div>
+</div>
+
+<!-- SIGNALS -->
+<div class="section-title">The 12 Macro Signals <span style="font-weight:400;font-size:10px;color:var(--dim);letter-spacing:normal;text-transform:none">— Updated every 15 minutes</span></div>
+<div class="sig-grid">
+  
+    <div class="sig-card">
+      <div class="sig-top">
+        <span class="sig-name">Yield Curve</span>
+        <span class="sig-badge" style="background:#22c55e20;color:#22c55e;border-color:#22c55e40">Bullish</span>
+      </div>
+      <div class="sig-value">+4.13% spread <span class="sig-trend">↓</span></div>
+      <div class="sig-interp">Positive = healthy growth; deeply negative = recession signal</div>
+      <div class="sig-weight">Weight: 1.00x</div>
+    </div>
+
+    <div class="sig-card">
+      <div class="sig-top">
+        <span class="sig-name">Fear Index (VIX)</span>
+        <span class="sig-badge" style="background:#eab30820;color:#eab308;border-color:#eab30840">Neutral</span>
+      </div>
+      <div class="sig-value">VIX 16.1 <span class="sig-trend">↓</span></div>
+      <div class="sig-interp">Below 20 = calm market; above 25 = fear; above 30 = panic</div>
+      <div class="sig-weight">Weight: 1.00x</div>
+    </div>
+
+    <div class="sig-card">
+      <div class="sig-top">
+        <span class="sig-name">US Dollar (DXY)</span>
+        <span class="sig-badge" style="background:#ef444420;color:#ef4444;border-color:#ef444440">Bearish</span>
+      </div>
+      <div class="sig-value">DXY +1.2% 20d <span class="sig-trend">→</span></div>
+      <div class="sig-interp">Rising dollar = risk-off pressure, bad for commodities & global stocks</div>
+      <div class="sig-weight">Weight: 1.00x</div>
+    </div>
+
+    <div class="sig-card">
+      <div class="sig-top">
+        <span class="sig-name">Inflation Pressure</span>
+        <span class="sig-badge" style="background:#22c55e20;color:#22c55e;border-color:#22c55e40">Bullish</span>
+      </div>
+      <div class="sig-value">Gold 20d -5.4% <span class="sig-trend">↓</span></div>
+      <div class="sig-interp">Rising gold often signals inflation expectations building</div>
+      <div class="sig-weight">Weight: 1.00x</div>
+    </div>
+
+    <div class="sig-card">
+      <div class="sig-top">
+        <span class="sig-name">Credit Spreads</span>
+        <span class="sig-badge" style="background:#eab30820;color:#eab308;border-color:#eab30840">Neutral</span>
+      </div>
+      <div class="sig-value">HYG/LQD +0.1% <span class="sig-trend">→</span></div>
+      <div class="sig-interp">Ratio rising = credit stress easing; falling = market stress building</div>
+      <div class="sig-weight">Weight: 1.00x</div>
+    </div>
+
+    <div class="sig-card">
+      <div class="sig-top">
+        <span class="sig-name">Copper/Gold Ratio</span>
+        <span class="sig-badge" style="background:#22c55e20;color:#22c55e;border-color:#22c55e40">Bullish</span>
+      </div>
+      <div class="sig-value">Cu/Au +10.8% <span class="sig-trend">↑</span></div>
+      <div class="sig-interp">Rising = real economic growth; falling = growth slowdown ahead</div>
+      <div class="sig-weight">Weight: 1.00x</div>
+    </div>
+
+    <div class="sig-card">
+      <div class="sig-top">
+        <span class="sig-name">Oil Trend</span>
+        <span class="sig-badge" style="background:#eab30820;color:#eab308;border-color:#eab30840">Neutral</span>
+      </div>
+      <div class="sig-value">Oil 20d +0.4% <span class="sig-trend">→</span></div>
+      <div class="sig-interp">Surging oil = inflationary pressure; crashing oil = demand collapse</div>
+      <div class="sig-weight">Weight: 1.00x</div>
+    </div>
+
+    <div class="sig-card">
+      <div class="sig-top">
+        <span class="sig-name">Bonds vs Equities</span>
+        <span class="sig-badge" style="background:#22c55e20;color:#22c55e;border-color:#22c55e40">Bullish</span>
+      </div>
+      <div class="sig-value">TLT-SPY -3.3% <span class="sig-trend">→</span></div>
+      <div class="sig-interp">Equities leading = risk-on; bonds leading = defensive positioning</div>
+      <div class="sig-weight">Weight: 1.00x</div>
+    </div>
+
+    <div class="sig-card">
+      <div class="sig-top">
+        <span class="sig-name">Gold/Equity Ratio</span>
+        <span class="sig-badge" style="background:#22c55e20;color:#22c55e;border-color:#22c55e40">Bullish</span>
+      </div>
+      <div class="sig-value">GLD/SPY -7.9% <span class="sig-trend">↓</span></div>
+      <div class="sig-interp">Rising = flight to safety; falling = confidence in equities</div>
+      <div class="sig-weight">Weight: 1.00x</div>
+    </div>
+
+    <div class="sig-card">
+      <div class="sig-top">
+        <span class="sig-name">Sector Rotation</span>
+        <span class="sig-badge" style="background:#22c55e20;color:#22c55e;border-color:#22c55e40">Bullish</span>
+      </div>
+      <div class="sig-value">Cyclical vs Defensive +13.9% <span class="sig-trend">↑</span></div>
+      <div class="sig-interp">Cyclicals outperforming = risk appetite healthy; defensives leading = caution</div>
+      <div class="sig-weight">Weight: 1.00x</div>
+    </div>
+
+    <div class="sig-card">
+      <div class="sig-top">
+        <span class="sig-name">Interest Rate Direction</span>
+        <span class="sig-badge" style="background:#eab30820;color:#eab308;border-color:#eab30840">Neutral</span>
+      </div>
+      <div class="sig-value">Short rates +0.6% <span class="sig-trend">↑</span></div>
+      <div class="sig-interp">Rising short rates = tightening; falling = easing/pivot signal</div>
+      <div class="sig-weight">Weight: 1.00x</div>
+    </div>
+
+    <div class="sig-card">
+      <div class="sig-top">
+        <span class="sig-name">Cross-Asset Momentum</span>
+        <span class="sig-badge" style="background:#ef444420;color:#ef4444;border-color:#ef444440">Bearish</span>
+      </div>
+      <div class="sig-value">Composite -0.7% <span class="sig-trend">→</span></div>
+      <div class="sig-interp">Positive = broad market tailwind; negative = broad headwind</div>
+      <div class="sig-weight">Weight: 1.00x</div>
+    </div>
+</div>
+
+<!-- LEARNING -->
+<div class="section-title">What MacroPilot Learned This Week</div>
+<div class="learn-card">
+  <div class="empty-state">First learning cycle runs on Sunday. Check back then.</div>
+  <div class="shadow-list"><span class="shadow-chip">🔬 Copper Futures Term Structure</span></div>
+</div>
+
+<!-- DECISIONS -->
+<div class="section-title">Recent Portfolio Decisions</div>
+<div class="decisions-card">
+  <div class="decision-row" style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:4px">
+    <div>Date</div><div>Regime</div><div>Conf.</div><div>Rotation</div>
+  </div>
+  
+    <div class="decision-row">
+      <div class="dec-date">2026-06-04</div>
+      <div class="dec-regime">Risk-On Growth</div>
+      <div class="dec-conf">60%</div>
+      <div class="dec-rotation">SPY +15%, QQQ +10%, TLT -10%, GLD -10%, IBIT +5%, CASH -10%</div>
+      <div class="dec-note">Maintain cyclical tilt but de-emphasise maximum-beta names; favour quality cyclicals with pricing power over pure momentum plays, and keep position sizes below full allocation until cross-asset momentum turns positive and oil confirms demand.</div>
+    </div>
+</div>
+
+<!-- HISTORY -->
+<div class="section-title">Full Regime Call History</div>
+<div class="hist-card">
+  <table class="hist-table">
+    <thead><tr><th>Date</th><th>Regime</th><th>Conf.</th><th>Outcome</th><th>Reasoning</th></tr></thead>
+    <tbody>
+    <tr>
+      <td>2026-06-04</td>
+      <td>Risk-On Growth</td>
+      <td>60%</td>
+      <td><span style="color:#6b7280">Pending</span></td>
+      <td class="hist-reasoning">The signal stack remains net growth-positive: equities are leading bonds, credit is tight, volatilit...</td>
+    </tr></tbody>
+  </table>
+</div>
+
+<footer class="site-footer">
+  MacroPilot · L7 Autonomous Macro Intelligence
+  <span style="color:var(--dim);margin:0 8px">·</span>
+  Built by <a href="https://adamdegoat.github.io">Zhiyong</a>
+  <span style="color:var(--dim);margin:0 8px">·</span>
+  <a href="https://adamdegoat.github.io">adamdegoat.github.io</a>
+  <br>
+  <span style="color:var(--dim);font-size:10px">
+    This is a simulated portfolio for research and educational purposes only.
+    Not financial advice. Past regime accuracy does not guarantee future results.
+  </span>
+</footer>
+
+</div>
+
+<script>
+(function() {
+  const history = [{"date": "2026-06-04", "regime": "risk_on_growth", "confidence": 60, "allocations": {"SPY": 0.35, "QQQ": 0.25, "TLT": 0.05, "GLD": 0.05, "IBIT": 0.15, "XLE": 0.1, "CASH": 0.05}}];
+  if (history.length < 2) {
+    document.querySelector('.chart-wrap').innerHTML = '<div class="chart-empty">Equity curve will appear after 2+ days of data. Check back tomorrow.</div>';
+    return;
+  }
+  const labels = history.map(h => h.date);
+  const values = history.map(h => h.portfolio_value || 100000);
+  const spyValues = history.map(h => h.spy_value || 100000);
+  const ctx = document.getElementById('perfChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'MacroPilot',
+          data: values,
+          borderColor: '#3b82f6',
+          backgroundColor: 'rgba(59,130,246,.08)',
+          borderWidth: 2,
+          pointRadius: 0,
+          fill: true,
+          tension: 0.3
+        },
+        {
+          label: 'SPY',
+          data: spyValues,
+          borderColor: '#6b7280',
+          backgroundColor: 'transparent',
+          borderWidth: 1.5,
+          borderDash: [4, 4],
+          pointRadius: 0,
+          tension: 0.3
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+      scales: {
+        x: { grid: { color: 'rgba(148,163,184,.06)' }, ticks: { color: '#4a5568', maxTicksLimit: 8, font: { size: 10 } } },
+        y: { grid: { color: 'rgba(148,163,184,.06)' }, ticks: { color: '#4a5568', font: { size: 10 }, callback: v => '$' + v.toLocaleString() } }
+      }
+    }
+  });
+})();
+</script>
+</body>
+</html>
