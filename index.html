@@ -114,6 +114,9 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
 .learn-acc{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:var(--green)}
 .learn-insight{font-size:14px;font-weight:600;color:#fff;margin-bottom:8px;line-height:1.5}
 .learn-summary{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+.learn-status{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:6px 10px;border-radius:6px;margin-bottom:12px;display:inline-block}
+.learn-on{color:#86efac;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2)}
+.learn-wait{color:#fcd34d;background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.2)}
 .adj-list{display:flex;flex-wrap:wrap;gap:6px}
 .adj-chip{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:#93c5fd}
 .shadow-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
@@ -483,6 +486,7 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
       <span class="learn-date">2026-06-07</span>
       <span class="learn-acc">Accuracy: 33% ↓</span>
     </div>
+    <div class="learn-status learn-wait">◐ Gathering data — weights held steady until signals reach 8 graded calls (0 past the gate so far)</div>
     <div class="learn-insight">A rising DXY is acting as a cross-asset denominator distorter: it mechanically suppresses gold, inflates the Cu/Au ratio, and creates a false-positive growth signal while simultaneously pressuring equities, crypto, and commodities. Both calls had the Cu/Au ratio as the primary anchor — the same artifact that the adversarial process flagged but could not fully discount. When DXY momentum is positive and cross-asset momentum is flat-to-negative, commodity ratio signals should be de-weighted by default, not treated as independent corroboration.</div>
     <div class="learn-summary">Both June 4 and June 5 calls predicted risk-on growth but the week delivered a broad risk-off selloff: SPY -2.8%, QQQ -5.1%, GLD -3.7%, IBIT -15.7%, with only energy (XLE +0.65%) holding. The root cause was DXY strength mechanically inflating the Cu/Au ratio while simultaneously pressuring dollar-denominated risk assets — the adversarial process correctly identified this vulnerability but the system lacked the weight to act on it. Going forward, DXY, credit spreads, and cross-asset momentum are upweighted as early-warning leads; copper_gold is sharply downweighted until the copper_futures_term_structure shadow signal can confirm whether Cu/Au moves reflect physical demand or financial positioning.</div>
     <div class="adj-list"><span class="adj-chip">Dxy: 1.40x</span><span class="adj-chip">Cross Asset Momentum: 1.30x</span><span class="adj-chip">Credit Spreads: 1.30x</span><span class="adj-chip">Copper Gold: 0.60x</span><span class="adj-chip">Sector Rotation: 0.80x</span><span class="adj-chip">Bonds Vs Equities: 0.85x</span></div>
