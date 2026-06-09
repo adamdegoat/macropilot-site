@@ -14,7 +14,7 @@
   --bg:#060c18;--surface:#0d1626;--surface2:#121e32;--line:rgba(148,163,184,.1);
   --ink:#e2eaf6;--muted:#7a8ba8;--dim:#4a5568;
   --blue:#3b82f6;--green:#22c55e;--red:#ef4444;--amber:#f59e0b;--purple:#a855f7;--cyan:#06b6d4;
-  --regime:#22c55e
+  --regime:#6b7280
 }
 html,body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
 body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130,246,.08),transparent 60%),radial-gradient(ellipse 800px 500px at 90% 5%,rgba(168,85,247,.08),transparent 60%);background-attachment:fixed}
@@ -37,13 +37,13 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
 
 /* REGIME HERO */
 .regime-hero{background:linear-gradient(135deg,var(--surface) 0%,var(--surface2) 100%);border:1px solid var(--line);border-radius:20px;padding:28px 32px;margin-bottom:12px;border-top:3px solid var(--regime);position:relative;overflow:hidden}
-.regime-hero::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse 600px 200px at 50% -20%,#22c55e15,transparent 60%);pointer-events:none}
+.regime-hero::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse 600px 200px at 50% -20%,#6b728015,transparent 60%);pointer-events:none}
 .regime-label-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;position:relative}
-.regime-badge{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800;color:#22c55e;letter-spacing:-.5px;line-height:1}
+.regime-badge{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800;color:#6b7280;letter-spacing:-.5px;line-height:1}
 .regime-conf-wrap{flex:1;min-width:200px}
 .regime-conf-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .regime-conf-bar{height:6px;background:rgba(148,163,184,.1);border-radius:3px;overflow:hidden}
-.regime-conf-fill{height:100%;width:44%;background:#ef4444;border-radius:3px;transition:width .8s ease}
+.regime-conf-fill{height:100%;width:45%;background:#ef4444;border-radius:3px;transition:width .8s ease}
 .regime-conf-pct{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;color:#ef4444;margin-top:5px}
 .regime-desc{font-size:14px;color:var(--muted);line-height:1.6;margin-top:14px;position:relative}
 .regime-note{font-size:13px;color:#93c5fd;margin-top:8px;padding:10px 14px;background:rgba(59,130,246,.07);border-radius:8px;border-left:2px solid rgba(59,130,246,.3)}
@@ -180,7 +180,7 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
     <span class="h-pill live"><span class="live-dot"></span>Live</span>
     <span class="h-pill">12 Signals</span>
     <span class="h-pill">Self-Improving</span>
-    <span class="h-pill">Updated 10 Jun 2026, 12:00 AM SGT</span>
+    <span class="h-pill">Updated 10 Jun 2026, 06:04 AM SGT</span>
   </div>
 </header>
 
@@ -188,24 +188,24 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
 <div class="section-title">Current Macro Regime</div>
 <div class="regime-hero">
   <div class="regime-label-row">
-    <div class="regime-badge">Risk-On Growth</div>
+    <div class="regime-badge">risk_off_transition</div>
     <div class="regime-conf-wrap">
       <div class="regime-conf-label">System Confidence</div>
       <div class="regime-conf-bar"><div class="regime-conf-fill"></div></div>
-      <div class="regime-conf-pct">44% confident</div>
+      <div class="regime-conf-pct">45% confident</div>
     </div>
   </div>
-  <div class="regime-desc">Markets are in growth mode. Risk appetite is healthy — equities are favoured over bonds. Good time to hold equity positions.</div>
-  <div class="regime-note">📋 Hold cyclical and growth overweights at reduced position sizing — treat this as a contested rather than confirmed growth environment, tighten stops on commodity-linked and tariff-sensitive longs, and treat any VIX print above 25 or copper/gold reversal as an immediate regime re-evaluation trigger.</div>
-  <div class="regime-adversarial">⚔️ Adversarial review: The regime holds as risk_on_growth on the basis of intact credit markets, a positive yield curve, oil providing cost relief, and equity outperformance over gold — but conviction is</div>
-  <div class="regime-updated">Signals refreshed: 10 Jun 2026, 05:49 AM SGT · Portfolio updated: 10 Jun 2026, 12:00 AM SGT</div>
+  <div class="regime-desc"></div>
+  <div class="regime-note">📋 Reduce cyclical and commodity-producer overweights, rotate toward quality defensive equity and shorter-duration credit, and treat any DXY reversal as the primary trigger for re-entering risk-on exposure.</div>
+  <div class="regime-adversarial">⚔️ Adversarial review: The +1.11 net score is structurally hollow: it is carried by 20-day lookback ratios that describe where we were, while every behaviorally current and momentum-based signal — sector</div>
+  <div class="regime-updated">Signals refreshed: 10 Jun 2026, 06:04 AM SGT · Portfolio updated: 10 Jun 2026, 06:04 AM SGT</div>
 </div>
 
 <!-- STATS -->
 <div class="stats-row">
   <div class="stat-card">
     <div class="stat-label">Total Regime Calls</div>
-    <div class="stat-val">3</div>
+    <div class="stat-val">4</div>
     <div class="stat-sub">Since launch</div>
   </div>
   <div class="stat-card">
@@ -221,7 +221,7 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
   <div class="stat-card">
     <div class="stat-label">Signals Active</div>
     <div class="stat-val">12</div>
-    <div class="stat-sub">3 in shadow testing</div>
+    <div class="stat-sub">4 in shadow testing</div>
   </div>
 </div>
 
@@ -232,60 +232,32 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
     <div class="portfolio-title">Current Target Allocations</div>
     <div class="portfolio-hint">📌 Following this? Use these weights</div>
   </div>
-  <div class="portfolio-sub">Based on the <strong style="color:#22c55e">Risk-On Growth</strong> regime at <strong>44% confidence</strong>. The system rotates gradually — max 20% shift per cycle — to avoid overreacting to short-term noise.</div>
+  <div class="portfolio-sub">Based on the <strong style="color:#6b7280">risk_off_transition</strong> regime at <strong>45% confidence</strong>. The system rotates gradually — max 20% shift per cycle — to avoid overreacting to short-term noise.</div>
   
-    <div class="alloc-row">
-      <div class="alloc-label">
-        <span class="alloc-dot" style="background:#3b82f6"></span>
-        <span class="alloc-name">US Market (SPY)</span>
-      </div>
-      <div class="alloc-bar-wrap">
-        <div class="alloc-bar" style="width:24%;background:#3b82f6"></div>
-      </div>
-      <div class="alloc-right">
-        <span class="alloc-pct">24%</span>
-        
-      </div>
-    </div>
-
     <div class="alloc-row">
       <div class="alloc-label">
         <span class="alloc-dot" style="background:#6b7280"></span>
         <span class="alloc-name">Cash</span>
       </div>
       <div class="alloc-bar-wrap">
-        <div class="alloc-bar" style="width:17%;background:#6b7280"></div>
+        <div class="alloc-bar" style="width:30%;background:#6b7280"></div>
       </div>
       <div class="alloc-right">
-        <span class="alloc-pct">18%</span>
-        <span class="alloc-diff alloc-down">-1%</span>
-      </div>
-    </div>
-
-    <div class="alloc-row">
-      <div class="alloc-label">
-        <span class="alloc-dot" style="background:#8b5cf6"></span>
-        <span class="alloc-name">Tech Growth (QQQ)</span>
-      </div>
-      <div class="alloc-bar-wrap">
-        <div class="alloc-bar" style="width:16%;background:#8b5cf6"></div>
-      </div>
-      <div class="alloc-right">
-        <span class="alloc-pct">17%</span>
+        <span class="alloc-pct">30%</span>
         
       </div>
     </div>
 
     <div class="alloc-row">
       <div class="alloc-label">
-        <span class="alloc-dot" style="background:#f97316"></span>
-        <span class="alloc-name">Bitcoin (IBIT)</span>
+        <span class="alloc-dot" style="background:#3b82f6"></span>
+        <span class="alloc-name">US Market (SPY)</span>
       </div>
       <div class="alloc-bar-wrap">
-        <div class="alloc-bar" style="width:11%;background:#f97316"></div>
+        <div class="alloc-bar" style="width:15%;background:#3b82f6"></div>
       </div>
       <div class="alloc-right">
-        <span class="alloc-pct">11%</span>
+        <span class="alloc-pct">15%</span>
         
       </div>
     </div>
@@ -296,10 +268,10 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
         <span class="alloc-name">Long Bonds (TLT)</span>
       </div>
       <div class="alloc-bar-wrap">
-        <div class="alloc-bar" style="width:10%;background:#06b6d4"></div>
+        <div class="alloc-bar" style="width:15%;background:#06b6d4"></div>
       </div>
       <div class="alloc-right">
-        <span class="alloc-pct">11%</span>
+        <span class="alloc-pct">15%</span>
         
       </div>
     </div>
@@ -310,10 +282,38 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
         <span class="alloc-name">Gold (GLD)</span>
       </div>
       <div class="alloc-bar-wrap">
-        <div class="alloc-bar" style="width:10%;background:#f59e0b"></div>
+        <div class="alloc-bar" style="width:15%;background:#f59e0b"></div>
       </div>
       <div class="alloc-right">
-        <span class="alloc-pct">11%</span>
+        <span class="alloc-pct">15%</span>
+        
+      </div>
+    </div>
+
+    <div class="alloc-row">
+      <div class="alloc-label">
+        <span class="alloc-dot" style="background:#8b5cf6"></span>
+        <span class="alloc-name">Tech Growth (QQQ)</span>
+      </div>
+      <div class="alloc-bar-wrap">
+        <div class="alloc-bar" style="width:10%;background:#8b5cf6"></div>
+      </div>
+      <div class="alloc-right">
+        <span class="alloc-pct">10%</span>
+        
+      </div>
+    </div>
+
+    <div class="alloc-row">
+      <div class="alloc-label">
+        <span class="alloc-dot" style="background:#f97316"></span>
+        <span class="alloc-name">Bitcoin (IBIT)</span>
+      </div>
+      <div class="alloc-bar-wrap">
+        <div class="alloc-bar" style="width:8%;background:#f97316"></div>
+      </div>
+      <div class="alloc-right">
+        <span class="alloc-pct">8%</span>
         
       </div>
     </div>
@@ -324,10 +324,10 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
         <span class="alloc-name">Energy (XLE)</span>
       </div>
       <div class="alloc-bar-wrap">
-        <div class="alloc-bar" style="width:8%;background:#22c55e"></div>
+        <div class="alloc-bar" style="width:7%;background:#22c55e"></div>
       </div>
       <div class="alloc-right">
-        <span class="alloc-pct">8%</span>
+        <span class="alloc-pct">7%</span>
         
       </div>
     </div>
@@ -490,7 +490,7 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
     <div class="learn-insight">A rising DXY is acting as a cross-asset denominator distorter: it mechanically suppresses gold, inflates the Cu/Au ratio, and creates a false-positive growth signal while simultaneously pressuring equities, crypto, and commodities. Both calls had the Cu/Au ratio as the primary anchor — the same artifact that the adversarial process flagged but could not fully discount. When DXY momentum is positive and cross-asset momentum is flat-to-negative, commodity ratio signals should be de-weighted by default, not treated as independent corroboration.</div>
     <div class="learn-summary">Both June 4 and June 5 calls predicted risk-on growth but the week delivered a broad risk-off selloff: SPY -2.8%, QQQ -5.1%, GLD -3.7%, IBIT -15.7%, with only energy (XLE +0.65%) holding. The root cause was DXY strength mechanically inflating the Cu/Au ratio while simultaneously pressuring dollar-denominated risk assets — the adversarial process correctly identified this vulnerability but the system lacked the weight to act on it. Going forward, DXY, credit spreads, and cross-asset momentum are upweighted as early-warning leads; copper_gold is sharply downweighted until the copper_futures_term_structure shadow signal can confirm whether Cu/Au moves reflect physical demand or financial positioning.</div>
     <div class="adj-list"><span class="adj-chip">Dxy: 1.40x</span><span class="adj-chip">Cross Asset Momentum: 1.30x</span><span class="adj-chip">Credit Spreads: 1.30x</span><span class="adj-chip">Copper Gold: 0.60x</span><span class="adj-chip">Sector Rotation: 0.80x</span><span class="adj-chip">Bonds Vs Equities: 0.85x</span></div>
-  <div class="shadow-list"><span class="shadow-chip">🔬 Copper Futures Term Structure</span><span class="shadow-chip">🔬 Global Pmi New Orders</span><span class="shadow-chip">🔬 Earnings Revision Breadth</span></div>
+  <div class="shadow-list"><span class="shadow-chip">🔬 Copper Futures Term Structure</span><span class="shadow-chip">🔬 Global Pmi New Orders</span><span class="shadow-chip">🔬 Earnings Revision Breadth</span><span class="shadow-chip">🔬 Spx Options Put Call Skew</span></div>
 </div>
 
 <!-- DECISIONS -->
@@ -500,6 +500,14 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
     <div>Date</div><div>Regime</div><div>Conf.</div><div>Rotation</div>
   </div>
   
+    <div class="decision-row">
+      <div class="dec-date">2026-06-10</div>
+      <div class="dec-regime">risk_off_transition</div>
+      <div class="dec-conf">45%</div>
+      <div class="dec-rotation">SPY -9%, QQQ -7%, TLT +4%, GLD +4%, IBIT -3%, XLE -1%, CASH +12%</div>
+      <div class="dec-note">Reduce cyclical and commodity-producer overweights, rotate toward quality defensive equity and shorter-duration credit, and treat any DXY reversal as the primary trigger for re-entering risk-on exposure.</div>
+    </div>
+
     <div class="decision-row">
       <div class="dec-date">2026-06-07</div>
       <div class="dec-regime">Risk-On Growth</div>
@@ -553,6 +561,14 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
       <td>44%</td>
       <td><span style="color:#6b7280">Pending</span></td>
       <td class="hist-reasoning">The regime holds as risk_on_growth on the basis of intact credit markets, a positive yield curve, oi...</td>
+    </tr>
+
+    <tr>
+      <td>2026-06-10</td>
+      <td>risk_off_transition</td>
+      <td>45%</td>
+      <td><span style="color:#6b7280">Pending</span></td>
+      <td class="hist-reasoning">The +1.11 net score is structurally hollow: it is carried by 20-day lookback ratios that describe wh...</td>
     </tr></tbody>
   </table>
 </div>
@@ -574,7 +590,7 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
 
 <script>
 (function() {
-  const history = [{"date": "2026-06-04", "regime": "risk_on_growth", "confidence": 60, "allocations": {"SPY": 0.35, "QQQ": 0.25, "TLT": 0.05, "GLD": 0.05, "IBIT": 0.15, "XLE": 0.1, "CASH": 0.05}}, {"date": "2026-06-05", "regime": "risk_on_growth", "confidence": 58, "allocations": {"SPY": 0.35, "QQQ": 0.25, "TLT": 0.05, "GLD": 0.05, "IBIT": 0.15, "XLE": 0.1, "CASH": 0.05}}, {"date": "2026-06-07", "regime": "risk_on_growth", "confidence": 44, "allocations": {"SPY": 0.2415, "QQQ": 0.1684, "TLT": 0.1075, "GLD": 0.1075, "IBIT": 0.1124, "XLE": 0.0844, "CASH": 0.1782}}];
+  const history = [{"date": "2026-06-04", "regime": "risk_on_growth", "confidence": 60, "allocations": {"SPY": 0.35, "QQQ": 0.25, "TLT": 0.05, "GLD": 0.05, "IBIT": 0.15, "XLE": 0.1, "CASH": 0.05}}, {"date": "2026-06-05", "regime": "risk_on_growth", "confidence": 58, "allocations": {"SPY": 0.35, "QQQ": 0.25, "TLT": 0.05, "GLD": 0.05, "IBIT": 0.15, "XLE": 0.1, "CASH": 0.05}}, {"date": "2026-06-07", "regime": "risk_on_growth", "confidence": 44, "allocations": {"SPY": 0.2415, "QQQ": 0.1684, "TLT": 0.1075, "GLD": 0.1075, "IBIT": 0.1124, "XLE": 0.0844, "CASH": 0.1782}}, {"date": "2026-06-10", "regime": "risk_off_transition", "confidence": 45, "allocations": {"SPY": 0.15, "QQQ": 0.1, "TLT": 0.15, "GLD": 0.15, "IBIT": 0.08, "XLE": 0.07, "CASH": 0.3}}];
   if (history.length < 2) {
     document.querySelector('.chart-wrap').innerHTML = '<div class="chart-empty">Equity curve will appear after 2+ days of data. Check back tomorrow.</div>';
     return;
