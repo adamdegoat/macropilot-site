@@ -606,13 +606,13 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
 
 <script>
 (function() {
-  const history = [{"date": "2026-06-04", "regime": "risk_on_growth", "confidence": 60, "allocations": {"SPY": 0.35, "QQQ": 0.25, "TLT": 0.05, "GLD": 0.05, "IBIT": 0.15, "XLE": 0.1, "CASH": 0.05}}, {"date": "2026-06-05", "regime": "risk_on_growth", "confidence": 58, "allocations": {"SPY": 0.35, "QQQ": 0.25, "TLT": 0.05, "GLD": 0.05, "IBIT": 0.15, "XLE": 0.1, "CASH": 0.05}}, {"date": "2026-06-07", "regime": "risk_on_growth", "confidence": 44, "allocations": {"SPY": 0.2415, "QQQ": 0.1684, "TLT": 0.1075, "GLD": 0.1075, "IBIT": 0.1124, "XLE": 0.0844, "CASH": 0.1782}}, {"date": "2026-06-10", "regime": "risk_off_transition", "confidence": 45, "allocations": {"SPY": 0.15, "QQQ": 0.1, "TLT": 0.15, "GLD": 0.15, "IBIT": 0.08, "XLE": 0.07, "CASH": 0.3}}, {"date": "2026-06-11", "regime": "late_cycle_expansion", "confidence": 48, "allocations": {"SPY": 0.15, "QQQ": 0.1, "TLT": 0.15, "GLD": 0.15, "IBIT": 0.08, "XLE": 0.07, "CASH": 0.3}}];
+  const history = [{"date": "2026-06-04", "value": 100000, "spy_value": 100000.0, "regime": "risk_on_growth", "confidence": 60}, {"date": "2026-06-05", "value": 100030.17, "spy_value": 100167.35, "regime": "risk_on_growth", "confidence": 60}, {"date": "2026-06-06", "value": 99804.18, "spy_value": 98822.66, "regime": "risk_on_growth", "confidence": 58}, {"date": "2026-06-07", "value": 99804.18, "spy_value": 97787.18, "regime": "risk_on_growth", "confidence": 58}, {"date": "2026-06-08", "value": 99804.18, "spy_value": 97787.18, "regime": "risk_on_growth", "confidence": 44}, {"date": "2026-06-09", "value": 99699.73, "spy_value": 98462.03, "regime": "risk_on_growth", "confidence": 44}, {"date": "2026-06-10", "value": 99457.24, "spy_value": 96759.65, "regime": "risk_on_growth", "confidence": 44}, {"date": "2026-06-11", "value": 99442.25, "spy_value": 96958.53, "regime": "risk_off_transition", "confidence": 45}];
   if (history.length < 2) {
     document.querySelector('.chart-wrap').innerHTML = '<div class="chart-empty">Equity curve will appear after 2+ days of data. Check back tomorrow.</div>';
     return;
   }
   const labels = history.map(h => h.date);
-  const values = history.map(h => h.portfolio_value || 100000);
+  const values = history.map(h => h.value || 100000);
   const spyValues = history.map(h => h.spy_value || 100000);
   const ctx = document.getElementById('perfChart').getContext('2d');
   new Chart(ctx, {
