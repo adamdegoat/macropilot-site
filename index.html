@@ -29,6 +29,24 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
 .header-pills{display:flex;gap:6px;flex-wrap:wrap}
 .h-pill{font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:20px;border:1px solid var(--line);color:var(--muted);background:rgba(148,163,184,.05)}
 .h-pill.live{color:var(--green);border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.07)}
+.h-pill-btn{cursor:pointer;color:#93c5fd;border-color:rgba(59,130,246,.35);background:rgba(59,130,246,.08);transition:all .15s}
+.h-pill-btn:hover{background:rgba(59,130,246,.18);color:#bfdbfe}
+/* INFO MODAL */
+.info-overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(3,8,18,.78);backdrop-filter:blur(4px);padding:24px;overflow-y:auto}
+.info-overlay.open{display:flex;align-items:flex-start;justify-content:center}
+.info-modal{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid var(--line);border-radius:18px;max-width:620px;width:100%;margin:auto;padding:30px 32px;box-shadow:0 30px 80px -20px rgba(0,0,0,.8);position:relative}
+.info-modal h2{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
+.info-modal .info-lede{font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:22px}
+.info-close{position:absolute;top:18px;right:20px;width:32px;height:32px;border-radius:9px;border:1px solid var(--line);background:rgba(148,163,184,.08);color:var(--muted);font-size:18px;cursor:pointer;line-height:1}
+.info-close:hover{color:#fff;background:rgba(148,163,184,.18)}
+.info-step{display:flex;gap:15px;align-items:flex-start;padding:15px 0;border-bottom:1px solid rgba(148,163,184,.08)}
+.info-step:last-of-type{border-bottom:none}
+.info-ico{width:42px;height:42px;flex:none;border-radius:11px;display:grid;place-items:center;font-size:19px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25)}
+.info-when{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--blue);font-weight:700;margin-bottom:3px}
+.info-what{font-size:14px;font-weight:700;color:#fff;margin-bottom:3px}
+.info-desc{font-size:13px;color:var(--muted);line-height:1.55}
+.info-note{margin-top:20px;font-size:12.5px;color:#93c5fd;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.18);border-radius:10px;padding:13px 15px;line-height:1.6}
+.info-note b{color:#fff}
 .live-dot{width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block;margin-right:5px;animation:pulse 2s infinite;vertical-align:middle}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.5)}70%{box-shadow:0 0 0 6px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
 
@@ -216,6 +234,7 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
     <span class="h-pill live"><span class="live-dot"></span>Live</span>
     <span class="h-pill">12 Signals</span>
     <span class="h-pill">Self-Improving</span>
+    <span class="h-pill h-pill-btn" onclick="openInfo()">ℹ️ How it works</span>
     <span class="h-pill">Updated 12 Jun 2026, 11:00 AM SGT</span>
   </div>
 </header>
@@ -234,7 +253,7 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
   <div class="regime-desc">Growth is still positive but maturing — valuations are stretched and inflation/rates are a risk. The system stays invested but tilts toward quality, energy and gold, trims leveraged growth, and lifts cash.</div>
   <div class="regime-note">📋 Hold cyclical and quality-growth exposure; do not defensively capitulate into bonds or cash — the Cu/Au ratio and steepening curve are signaling rising real rates on growth expectations, not fear, so rotating aggressively to duration here risks a double penalty of missed equity upside and bond losses.</div>
   <div class="regime-adversarial">⚔️ Adversarial review: The weight of forward-looking structural signals — Cu/Au at +8.1% (dataset's highest raw conviction at +1.00) and a steepening yield curve — establishes that real economic activity</div>
-  <div class="regime-updated">Signals refreshed: 12 Jun 2026, 03:16 PM SGT · Portfolio updated: 12 Jun 2026, 11:00 AM SGT</div>
+  <div class="regime-updated">Signals refreshed: 12 Jun 2026, 03:31 PM SGT · Portfolio updated: 12 Jun 2026, 11:00 AM SGT</div>
 </div>
 
 <!-- PORTFOLIO SCORECARD -->
@@ -440,7 +459,7 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
         <span class="sig-name">Fear Index (VIX)</span>
         <span class="sig-badge" style="background:#eab30820;color:#eab308;border-color:#eab30840">Neutral</span>
       </div>
-      <div class="sig-value">VIX 19.4 <span class="sig-trend">↑</span></div>
+      <div class="sig-value">VIX 19.5 <span class="sig-trend">↑</span></div>
       <div class="sig-interp">Below 20 = calm market; above 25 = fear; above 30 = panic</div>
       <div class="sig-weight">Weight: 1.00x</div>
     </div>
@@ -450,7 +469,7 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
         <span class="sig-name">US Dollar (DXY)</span>
         <span class="sig-badge" style="background:#eab30820;color:#eab308;border-color:#eab30840">Neutral</span>
       </div>
-      <div class="sig-value">DXY +0.5% 20d <span class="sig-trend">→</span></div>
+      <div class="sig-value">DXY +0.6% 20d <span class="sig-trend">→</span></div>
       <div class="sig-interp">Rising dollar = risk-off pressure, bad for commodities & global stocks</div>
       <div class="sig-weight">Weight: 1.40x</div>
     </div>
@@ -480,7 +499,7 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
         <span class="sig-name">Copper/Gold Ratio</span>
         <span class="sig-badge" style="background:#22c55e20;color:#22c55e;border-color:#22c55e40">Bullish</span>
       </div>
-      <div class="sig-value">Cu/Au +13.0% <span class="sig-trend">↑</span></div>
+      <div class="sig-value">Cu/Au +12.8% <span class="sig-trend">↑</span></div>
       <div class="sig-interp">Rising = real economic growth; falling = growth slowdown ahead</div>
       <div class="sig-weight">Weight: 0.60x</div>
     </div>
@@ -490,7 +509,7 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
         <span class="sig-name">Oil Trend</span>
         <span class="sig-badge" style="background:#22c55e20;color:#22c55e;border-color:#22c55e40">Bullish</span>
       </div>
-      <div class="sig-value">Oil 20d -18.2% <span class="sig-trend">↓</span></div>
+      <div class="sig-value">Oil 20d -18.3% <span class="sig-trend">↓</span></div>
       <div class="sig-interp">Surging oil = inflationary pressure; crashing oil = demand collapse</div>
       <div class="sig-weight">Weight: 1.00x</div>
     </div>
@@ -673,6 +692,38 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
   </table>
 </div>
 
+<!-- INFO MODAL -->
+<div class="info-overlay" id="info-overlay" onclick="if(event.target===this)closeInfo()">
+  <div class="info-modal">
+    <button class="info-close" onclick="closeInfo()">×</button>
+    <h2>How MacroPilot works</h2>
+    <div class="info-lede">MacroPilot watches the big-picture economy through 12 market signals, decides which "regime" the world is in, and adjusts a model portfolio to match. Here is exactly when it does each thing (all times Singapore / SGT):</div>
+
+    <div class="info-step">
+      <div class="info-ico">🔄</div>
+      <div><div class="info-when">Every 15 minutes</div>
+      <div class="info-what">Scans the signals</div>
+      <div class="info-desc">Pulls fresh readings on all 12 signals (interest rates, the fear index, gold, oil, the dollar, credit, and more) and refreshes this page. No buying or selling happens here — it's just keeping the data current so you always see live numbers.</div></div>
+    </div>
+
+    <div class="info-step">
+      <div class="info-ico">📅</div>
+      <div><div class="info-when">Once a day · 6:00 AM</div>
+      <div class="info-what">Decides the regime &amp; rotates the portfolio</div>
+      <div class="info-desc">This is the main event. It re-reads every signal, makes a regime call in three steps (propose → challenge it → finalise), and if the outlook has shifted it <b>rotates</b> the portfolio — moving money between stocks, bonds, gold, energy, crypto and cash to fit the new picture. It moves gradually (at most ~20% in one day) so it never overreacts to a single noisy day.</div></div>
+    </div>
+
+    <div class="info-step">
+      <div class="info-ico">🔁</div>
+      <div><div class="info-when">Once a week · Sunday 7:00 AM</div>
+      <div class="info-what">Learns from its track record</div>
+      <div class="info-desc">It grades how its past calls actually turned out and adjusts how much it trusts each signal — the signals that have been right get more say, the ones that have been wrong get less. This is the "self-improving" part.</div></div>
+    </div>
+
+    <div class="info-note">💡 <b>In plain terms:</b> it <b>checks the data every 15 minutes</b>, makes its <b>one real decision each morning at 6 AM</b>, and <b>tunes itself every Sunday</b>. So the portfolio usually changes at most once a day — and often not at all if nothing meaningful has shifted.</div>
+  </div>
+</div>
+
 <footer class="site-footer">
   MacroPilot · L7 Autonomous Macro Intelligence
   <span style="color:var(--dim);margin:0 8px">·</span>
@@ -689,6 +740,9 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
 </div>
 
 <script>
+function openInfo(){ document.getElementById('info-overlay').classList.add('open'); }
+function closeInfo(){ document.getElementById('info-overlay').classList.remove('open'); }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeInfo(); });
 (function() {
   const history = [{"date": "2026-06-04", "value": 100000, "spy_value": 100000.0, "regime": "risk_on_growth", "confidence": 60}, {"date": "2026-06-05", "value": 100030.17, "spy_value": 100167.35, "regime": "risk_on_growth", "confidence": 60}, {"date": "2026-06-06", "value": 99804.18, "spy_value": 98822.66, "regime": "risk_on_growth", "confidence": 58}, {"date": "2026-06-07", "value": 99804.18, "spy_value": 97787.18, "regime": "risk_on_growth", "confidence": 58}, {"date": "2026-06-08", "value": 99804.18, "spy_value": 97787.18, "regime": "risk_on_growth", "confidence": 44}, {"date": "2026-06-09", "value": 99699.73, "spy_value": 98462.03, "regime": "risk_on_growth", "confidence": 44}, {"date": "2026-06-10", "value": 99457.24, "spy_value": 96759.65, "regime": "risk_on_growth", "confidence": 44}, {"date": "2026-06-11", "value": 99442.25, "spy_value": 96958.53, "regime": "risk_off_transition", "confidence": 45}, {"date": "2026-06-12", "value": 99582.05, "spy_value": 96691.77, "regime": "late_cycle_expansion", "confidence": 48}];
   if (history.length < 2) {
