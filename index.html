@@ -57,6 +57,38 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
 .stat-val{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.5px;line-height:1}
 .stat-sub{font-size:11px;color:var(--dim);margin-top:4px}
 
+/* SCORECARD */
+.scorecard{display:flex;align-items:center;gap:28px;background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--line);border-radius:16px;padding:24px 30px;margin-bottom:12px;position:relative;overflow:hidden}
+.scorecard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--blue),var(--purple))}
+.sc-main{flex:1;min-width:200px}
+.sc-k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted)}
+.sc-val{font-size:42px;font-weight:800;letter-spacing:-1px;color:#fff;line-height:1.05;margin:5px 0;font-family:'Space Grotesk',sans-serif}
+.sc-ret{font-size:14px;font-weight:700;font-family:'IBM Plex Mono',monospace}
+.sc-since{color:var(--dim);font-weight:400}
+.sc-divider{width:1px;align-self:stretch;background:var(--line)}
+.sc-bench{display:flex;flex-direction:column;gap:8px;min-width:210px}
+.sc-brow{display:flex;justify-content:space-between;gap:18px;font-size:13px;color:var(--muted)}
+.sc-brow b{font-family:'IBM Plex Mono',monospace;font-size:14px}
+.sc-edge{border-top:1px solid var(--line);padding-top:9px;margin-top:1px;font-weight:700;color:var(--ink)}
+.sc-edge b{font-size:16px}
+.pos{color:var(--green)}.neg{color:var(--red)}
+
+/* LATEST MOVE */
+.move-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 26px;margin-bottom:12px}
+.move-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.move-title{font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:700;color:#fff}
+.move-when{font-size:12px;color:var(--muted);margin-top:4px}
+.move-when b{color:var(--ink)}
+.move-rots{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.rot-chip{font-size:12px;font-weight:600;padding:6px 11px;border-radius:8px;border:1px solid}
+.rot-chip b{font-family:'IBM Plex Mono',monospace;margin-left:3px}
+.rot-add{color:#86efac;background:rgba(34,197,94,.09);border-color:rgba(34,197,94,.25)}
+.rot-trim{color:#fca5a5;background:rgba(239,68,68,.09);border-color:rgba(239,68,68,.25)}
+.rot-hold{font-size:12.5px;color:var(--muted);font-weight:500}
+.move-why{font-size:13px;color:var(--muted);line-height:1.6;background:var(--surface2);border-radius:10px;padding:12px 15px}
+.move-why-k{color:var(--blue);font-weight:700}
+.move-note{font-size:13px;color:#93c5fd;margin-top:10px;padding:10px 14px;background:rgba(59,130,246,.07);border-radius:8px;border-left:2px solid rgba(59,130,246,.3)}
+
 /* PORTFOLIO SECTION */
 .portfolio-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px 28px;margin-bottom:12px}
 .portfolio-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:8px}
@@ -99,13 +131,14 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
 
 /* DECISIONS */
 .decisions-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px 28px;margin-bottom:12px}
-.decision-row{display:grid;grid-template-columns:90px 1fr 60px 160px;gap:12px;padding:10px 0;border-bottom:1px solid rgba(148,163,184,.05);font-size:12px;align-items:start}
+.decision-row{display:grid;grid-template-columns:100px 1fr 60px;gap:12px;padding:14px 0;border-bottom:1px solid rgba(148,163,184,.06);font-size:12px;align-items:center}
 .decision-row:last-child{border-bottom:none}
 .dec-date{font-family:'IBM Plex Mono',monospace;color:var(--dim)}
 .dec-regime{font-weight:600;color:#fff}
-.dec-conf{font-family:'IBM Plex Mono',monospace;color:var(--amber)}
-.dec-rotation{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--blue)}
-.dec-note{color:var(--muted);font-size:11px;grid-column:1/-1;padding-top:2px}
+.dec-conf{font-family:'IBM Plex Mono',monospace;color:var(--amber);text-align:right}
+.dec-rotation{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.dec-rotation .rot-chip{font-size:11px;padding:4px 9px}
+.dec-note{color:var(--muted);font-size:11.5px;grid-column:1/-1;padding-top:2px;line-height:1.5}
 
 /* LEARNING */
 .learn-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px 28px;margin-bottom:12px}
@@ -150,8 +183,11 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
   .regime-badge{font-size:20px}
   .stats-row{grid-template-columns:1fr 1fr}
   .sig-grid{grid-template-columns:1fr}
-  .decision-row{grid-template-columns:1fr 1fr}
-  .alloc-row{grid-template-columns:150px 1fr 70px}
+  .decision-row{grid-template-columns:1fr auto}
+  .alloc-row{grid-template-columns:140px 1fr 64px}
+  .scorecard{flex-direction:column;align-items:stretch;gap:16px}
+  .sc-divider{width:auto;height:1px}
+  .sc-val{font-size:34px}
 }
 </style>
 </head>
@@ -199,6 +235,38 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
   <div class="regime-note">📋 Hold risk exposure but tilt toward quality — reduce the most leveraged cyclicals and cap credit-sensitive positions until HYG/LQD spreads confirm or refute the transition thesis.</div>
   <div class="regime-adversarial">⚔️ Adversarial review: The signal set is bifurcated but the aggregate math resolves mildly positive (+0.59 net weighted score), and the two highest-information structural signals — credit spreads (HYG/LQ</div>
   <div class="regime-updated">Signals refreshed: 12 Jun 2026, 10:29 AM SGT · Portfolio updated: 12 Jun 2026, 12:10 AM SGT</div>
+</div>
+
+<!-- PORTFOLIO SCORECARD -->
+<div class="section-title">Portfolio Performance</div>
+
+  <div class="scorecard">
+    <div class="sc-main">
+      <div class="sc-k">Simulated Portfolio Value</div>
+      <div class="sc-val">$99,582</div>
+      <div class="sc-ret neg">-0.42% total <span class="sc-since">· from $100,000 · 8 days live</span></div>
+    </div>
+    <div class="sc-divider"></div>
+    <div class="sc-bench">
+      <div class="sc-brow"><span>MacroPilot</span><b class="neg">-0.42%</b></div>
+      <div class="sc-brow"><span>SPY · buy &amp; hold</span><b class="neg">-3.31%</b></div>
+      <div class="sc-brow sc-edge"><span>Beating the market by</span><b class="pos">+2.89%</b></div>
+    </div>
+  </div>
+
+<!-- LATEST MOVE -->
+<div class="section-title">Latest Portfolio Decision</div>
+<div class="move-card">
+  
+    <div class="move-head">
+      <div>
+        <div class="move-title">⟳ Held the allocation steady</div>
+        <div class="move-when">2026-06-11 · regime <b>late_cycle_expansion</b> · 48% confident</div>
+      </div>
+    </div>
+    <div class="move-rots"><span class="rot-hold">— Held · no rotation this cycle</span></div>
+    <div class="move-why"><span class="move-why-k">Why:</span> The signal set is bifurcated but the aggregate math resolves mildly positive (+0.59 net weighted score), and the two highest-information structural signals — credit spreads (HYG/LQD flat, +0.39 weighted) and the copper/gold ratio (+7.4%, +0.60 weighted) — are squarely in expansio…</div>
+    <div class="move-note">📋 <b>Plan:</b> Hold risk exposure but tilt toward quality — reduce the most leveraged cyclicals and cap credit-sensitive positions until HYG/LQD spreads confirm or refute the transition thesis.</div>
 </div>
 
 <!-- STATS -->
@@ -497,14 +565,14 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
 <div class="section-title">Recent Portfolio Decisions</div>
 <div class="decisions-card">
   <div class="decision-row" style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:4px">
-    <div>Date</div><div>Regime</div><div>Conf.</div><div>Rotation</div>
+    <div>Date</div><div>Regime</div><div style="text-align:right">Conf.</div>
   </div>
   
     <div class="decision-row">
       <div class="dec-date">2026-06-11</div>
       <div class="dec-regime">late_cycle_expansion</div>
       <div class="dec-conf">48%</div>
-      <div class="dec-rotation">No change</div>
+      <div class="dec-rotation"><span class="rot-hold">— Held · no rotation this cycle</span></div>
       <div class="dec-note">Hold risk exposure but tilt toward quality — reduce the most leveraged cyclicals and cap credit-sensitive positions until HYG/LQD spreads confirm or refute the transition thesis.</div>
     </div>
 
@@ -512,7 +580,7 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
       <div class="dec-date">2026-06-10</div>
       <div class="dec-regime">risk_off_transition</div>
       <div class="dec-conf">45%</div>
-      <div class="dec-rotation">SPY -9%, QQQ -7%, TLT +4%, GLD +4%, IBIT -3%, XLE -1%, CASH +12%</div>
+      <div class="dec-rotation"><span class="rot-chip rot-add">▲ Add CASH <b>+12%</b></span><span class="rot-chip rot-trim">▼ Trim US Market <b>-9%</b></span><span class="rot-chip rot-trim">▼ Trim Tech Growth <b>-7%</b></span><span class="rot-chip rot-add">▲ Add Long Bonds <b>+4%</b></span><span class="rot-chip rot-add">▲ Add Gold <b>+4%</b></span><span class="rot-chip rot-trim">▼ Trim Bitcoin <b>-3%</b></span><span class="rot-chip rot-trim">▼ Trim Energy <b>-1%</b></span></div>
       <div class="dec-note">Reduce cyclical and commodity-producer overweights, rotate toward quality defensive equity and shorter-duration credit, and treat any DXY reversal as the primary trigger for re-entering risk-on exposure.</div>
     </div>
 
@@ -520,7 +588,7 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
       <div class="dec-date">2026-06-07</div>
       <div class="dec-regime">Risk-On Growth</div>
       <div class="dec-conf">44%</div>
-      <div class="dec-rotation">SPY -11%, QQQ -8%, TLT +6%, GLD +6%, IBIT -4%, XLE -2%, CASH +13%</div>
+      <div class="dec-rotation"><span class="rot-chip rot-add">▲ Add CASH <b>+13%</b></span><span class="rot-chip rot-trim">▼ Trim US Market <b>-11%</b></span><span class="rot-chip rot-trim">▼ Trim Tech Growth <b>-8%</b></span><span class="rot-chip rot-add">▲ Add Long Bonds <b>+6%</b></span><span class="rot-chip rot-add">▲ Add Gold <b>+6%</b></span><span class="rot-chip rot-trim">▼ Trim Bitcoin <b>-4%</b></span><span class="rot-chip rot-trim">▼ Trim Energy <b>-2%</b></span></div>
       <div class="dec-note">Hold cyclical and growth overweights at reduced position sizing — treat this as a contested rather than confirmed growth environment, tighten stops on commodity-linked and tariff-sensitive longs, and treat any VIX print above 25 or copper/gold reversal as an immediate regime re-evaluation trigger.</div>
     </div>
 
@@ -528,7 +596,7 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
       <div class="dec-date">2026-06-05</div>
       <div class="dec-regime">Risk-On Growth</div>
       <div class="dec-conf">58%</div>
-      <div class="dec-rotation">No change</div>
+      <div class="dec-rotation"><span class="rot-hold">— Held · no rotation this cycle</span></div>
       <div class="dec-note">Maintain a modest cyclical and growth tilt in US equities but size conservatively and avoid EM and internationally-leveraged plays until dollar strength reverses and credit spreads confirm — this regime has insufficient breadth to justify aggressive rotation.</div>
     </div>
 
@@ -536,7 +604,7 @@ body{background-image:radial-gradient(ellipse 900px 500px at 10% -5%,rgba(59,130
       <div class="dec-date">2026-06-04</div>
       <div class="dec-regime">Risk-On Growth</div>
       <div class="dec-conf">60%</div>
-      <div class="dec-rotation">SPY +15%, QQQ +10%, TLT -10%, GLD -10%, IBIT +5%, CASH -10%</div>
+      <div class="dec-rotation"><span class="rot-chip rot-add">▲ Add US Market <b>+15%</b></span><span class="rot-chip rot-add">▲ Add Tech Growth <b>+10%</b></span><span class="rot-chip rot-trim">▼ Trim Long Bonds <b>-10%</b></span><span class="rot-chip rot-trim">▼ Trim Gold <b>-10%</b></span><span class="rot-chip rot-trim">▼ Trim CASH <b>-10%</b></span><span class="rot-chip rot-add">▲ Add Bitcoin <b>+5%</b></span></div>
       <div class="dec-note">Maintain cyclical tilt but de-emphasise maximum-beta names; favour quality cyclicals with pricing power over pure momentum plays, and keep position sizes below full allocation until cross-asset momentum turns positive and oil confirms demand.</div>
     </div>
 </div>
